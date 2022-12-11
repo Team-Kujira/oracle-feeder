@@ -74,14 +74,3 @@ You can start feeder with arguments or env.
   # set your env vars
   $ npm start vote
   ```
-
-| Argument          | Env               | Description                                                | Example                      |
-| ----------------- | ----------------- | ---------------------------------------------------------- | ---------------------------- |
-| `password`        | `PASSWORD`        | Password for mnemonic (assigned in step #2)                | `12345678`                   |
-| `data-source-url` | `DATA_SOURCE_URL` | Price server URL.                                          | http://localhost:8532/latest |
-| `lcd-url`         | `LCD_ADDRESS`     | LCD server URL (can be multiple)                           | https://lcd.anr.dev          |
-| `chain-id`        | `CHAIN_ID`        | Chain ID.                                                  | `andromeda-oralce-1`         |
-| `validators`      | `VALIDATOR`       | Validator to submit prices for (can be multiple)           | `anrvaloper1xx...`           |
-| `key-name`        | `KEY_NAME`        | name to be given to the key that will be encrypted in file | `voter`                      |
-| `coin-type`       | `COIN_TYPE`       | coin type used to derive the public address (default 118)  | `118`                        |
-| `key-path`        | `KEY_PATH`        | signing key store path (default voter.json)                | `voter.json`                 |
