@@ -33,7 +33,7 @@ function registerCommands(parser: ArgumentParser): void {
 
   voteCommand.addArgument([`--validators`], {
     action: `append`,
-    help: `validators address (e.g. terravaloper1...), can have multiple`,
+    help: `validators address (e.g. oraclevaloper1...), can have multiple`,
     required: false,
   });
 

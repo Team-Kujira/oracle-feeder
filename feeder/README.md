@@ -1,6 +1,6 @@
 # `feeder`
 
-Submit exchange rate prevotes and votes, implementing the [voting procedure](https://github.com/terra-money/andromeda-oracle/blob/main/x/oracle/spec/01_concepts.md#voting-procedure).
+Submit exchange rate prevotes and votes,
 
 ## Requirements
 

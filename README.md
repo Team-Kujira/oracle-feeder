@@ -1,4 +1,4 @@
-# Terra Oracle Feeder
+# Oracle Feeder
 
 This contains the Oracle feeder software that is used for periodically submitting oracle votes for the exchange rate of the different assets offered by the oracle chain. This implementation can be used as-is, but also can serve as a reference for creating your own custom oracle feeder.
 

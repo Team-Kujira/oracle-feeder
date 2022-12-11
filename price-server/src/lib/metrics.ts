@@ -24,12 +24,12 @@ const quoterAlive = new Map();
 
 function setupMetrics() {
   if (meter) return;
-  meter = meterProvider.getMeter("terra-oracle-feeder");
+  meter = meterProvider.getMeter("oracle-feeder");
   requestCount = meter.createCounter("requests", {
     description: "Count all incoming requests",
   });
   meter.createUpDownSumObserver(
-    "terra_oracle_up",
+    "oracle_up",
     {
       description: "1 if price-server quoter is up, or 0 is failed",
     },
