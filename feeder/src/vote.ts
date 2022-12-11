@@ -193,7 +193,7 @@ function buildVoteMsgs(
   voterAddr: string
 ): MsgAggregateExchangeRateVote[] {
   return valAddrs.map((valAddr) => ({
-    salt: crypto.randomBytes(2).toString("hex"),
+    salt: crypto.randomBytes(32).toString("hex"),
     exchange_rates: coinsToString(prices),
     feeder: voterAddr,
     validator: valAddr,

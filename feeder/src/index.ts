@@ -118,7 +118,7 @@ async function main(): Promise<void> {
       args.dataSourceUrl?.length === 0 ||
       args.chainID === ""
     ) {
-      console.error("Missing --rpc, --chain-id or --data-source-url");
+      console.error("Missing --rpc-url, --chain-id or --data-source-url");
       return;
     }
 
