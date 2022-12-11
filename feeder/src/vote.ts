@@ -28,7 +28,7 @@ import * as ks from "./keystore";
 import * as logger from "./logger";
 
 const coinsToString = (coins: Coin[]): string =>
-  coins.map((c) => `${c.amount}${c.denom}`).join(",");
+  coins.map((c) => `${parseFloat(c.amount).toFixed(18)}${c.denom}`).join(",");
 
 /**
  * Calculates the aggregate vote hash
@@ -60,7 +60,7 @@ export function calculateFee(
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
-    granter,
+    granter: granter || undefined,
   };
 }
 
@@ -72,7 +72,7 @@ export async function signAndBroadcast(
   memo = ""
 ): Promise<DeliverTxResponse> {
   const gasEstimation = await client.simulate(signerAddress, messages, memo);
-  const multiplier = 1.2;
+  const multiplier = 1.7;
   const fee = calculateFee(
     Math.round(gasEstimation * multiplier),
     args.gasPrice,
@@ -139,9 +139,12 @@ async function loadOracleParams(
   };
 }
 
-async function getPrices(sources: string[]): Promise<Coin[]> {
-  console.log({ sources });
+interface Price {
+  denom: string;
+  price: string;
+}
 
+async function getPrices(sources: string[]): Promise<Price[]> {
   const results = await Bluebird.some(
     sources.map((s) => ax.get(s)),
     1
@@ -178,31 +181,10 @@ async function getPrices(sources: string[]): Promise<Coin[]> {
  * 1. Removes price that cannot be found in oracle whitelist
  * 2. Fill abstain prices for prices that cannot be found in price source but in oracle whitelist
  */
-function preparePrices(prices: Coin[], oracleWhitelist: string[]): Coin[] {
-  const newPrices = prices
-    .map((price) => {
-      if (oracleWhitelist.indexOf(`u${price.denom.toLowerCase()}`) === -1) {
-        return;
-      }
-
-      return price;
-    })
-    .filter(Boolean) as Coin[];
-
-  oracleWhitelist.forEach((denom) => {
-    const found =
-      prices.filter((price) => denom === `u${price.denom.toLowerCase()}`)
-        .length > 0;
-
-    if (!found) {
-      newPrices.push({
-        denom: denom.slice(1).toUpperCase(),
-        amount: "0.000000",
-      });
-    }
-  });
-
-  return newPrices;
+function preparePrices(prices: Price[], oracleWhitelist: string[]): Coin[] {
+  return prices
+    .filter((p) => oracleWhitelist.includes(p.denom))
+    .map((p) => ({ amount: p.price, denom: p.denom }));
 }
 
 function buildVoteMsgs(
