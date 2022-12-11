@@ -3,6 +3,7 @@
 Submit exchange rate prevotes and votes, implementing the [voting procedure](https://github.com/terra-money/andromeda-oracle/blob/main/x/oracle/spec/01_concepts.md#voting-procedure).
 
 ## Requirements
+
 Every Oracle Chain validator must participate in the oracle process and periodically submit a vote for the exchange rate of Luna in all whitelisted denominations. Because this process occurs every 30 seconds, validators must set up an automated process to avoid getting slashed and jailed.
 
 ## Make a new key for oracle votes
@@ -26,7 +27,6 @@ The account address used to submit oracle voting transactions is called a `feede
 ```bash
 oracled tx oracle set-feeder <feeder-address> --from=<validator>
 ```
-
 
 ## Instructions
 
@@ -56,41 +56,32 @@ Make sure the Price Server is running.
 
 You can start feeder with arguments or env.
 
-* Arguments
-   ``` shell
-   $ npm start vote -- \
-      --source http://localhost:8532/latest \
-      --lcd-url https://lcd-1.anr.dev \
-      --lcd-url https://lcd-2.anr.dev \
-      --chain-id andromeda-oralce-1 \
-      --validators anrvaloper1xx \
-      --validators anrvaloper1yy \
-      --password "<password>"
-   ```
+- Arguments
 
-* Env
-   ```shell
-   # set your env vars 
-   $ npm start vote
-   ```
+  ```shell
+  $ npm start vote -- \
+     --source http://localhost:8532/latest \
+     --rpc-url https://lcd-1.anr.dev \
+     --chain-id andromeda-oralce-1 \
+     --validator kujiravaloper.... \
+     --gas-price 0.00125ukuji \
+     --fee-granter kujira1234 \
+     --password "<password>"
+  ```
 
+- Env
+  ```shell
+  # set your env vars
+  $ npm start vote
+  ```
 
-| Argument              | Env                | Description                                               | Example                      |
-| --------------------- | ------------------ | --------------------------------------------------------- | ---------------------------- |
-| `password`            | `PASSWORD`         | Password for mnemonic (assigned in step #2)               | `12345678`                   |
-| `data-source-url`     | `DATA_SOURCE_URL`  | Price server URL.                                         | http://localhost:8532/latest |
-| `lcd-url`             | `LCD_ADDRESS`      | LCD server URL (can be multiple)                          | https://lcd.anr.dev          |
-| `chain-id`            | `CHAIN_ID`         | Chain ID.                                                 | `andromeda-oralce-1`         |
-| `validators`          | `VALIDATOR`        | Validator to submit prices for (can be multiple)          | `anrvaloper1xx...`           |
-| `key-name`            | `KEY_NAME`         | name to be given to the key that will be encrypted in file| `voter`                      |
-| `coin-type`           | `COIN_TYPE`        | coin type used to derive the public address (default 118) | `118`                        |
-| `key-path`            | `KEY_PATH`         | signing key store path (default voter.json)               | `voter.json`                 |
-
-
-## Set up oracle feeder program
-
-To start submitting oracle messages with your feeder account, install and set up an oracle feeder.
-
-- Install Terra's Node.js [`oracle-feeder`](https://github.com/terra-money/oracle-feeder) by visiting [Terra's oracle feeder Github repo](https://github.com/terra-money/oracle-feeder).
-
-Validators are encouraged to set up their own oracle feeders.
+| Argument          | Env               | Description                                                | Example                      |
+| ----------------- | ----------------- | ---------------------------------------------------------- | ---------------------------- |
+| `password`        | `PASSWORD`        | Password for mnemonic (assigned in step #2)                | `12345678`                   |
+| `data-source-url` | `DATA_SOURCE_URL` | Price server URL.                                          | http://localhost:8532/latest |
+| `lcd-url`         | `LCD_ADDRESS`     | LCD server URL (can be multiple)                           | https://lcd.anr.dev          |
+| `chain-id`        | `CHAIN_ID`        | Chain ID.                                                  | `andromeda-oralce-1`         |
+| `validators`      | `VALIDATOR`       | Validator to submit prices for (can be multiple)           | `anrvaloper1xx...`           |
+| `key-name`        | `KEY_NAME`        | name to be given to the key that will be encrypted in file | `voter`                      |
+| `coin-type`       | `COIN_TYPE`       | coin type used to derive the public address (default 118)  | `118`                        |
+| `key-path`        | `KEY_PATH`        | signing key store path (default voter.json)                | `voter.json`                 |

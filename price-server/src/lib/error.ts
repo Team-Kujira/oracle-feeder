@@ -1,23 +1,23 @@
-import * as sentry from '@sentry/node'
-import * as logger from './logger'
+import * as sentry from "@sentry/node";
+import * as logger from "./logger";
 
 interface Options {
-  sentry?: string
+  sentry?: string;
 }
 
 export function init(opts: Options = {}): void {
-  opts?.sentry && sentry.init({ dsn: opts.sentry })
+  opts?.sentry && sentry.init({ dsn: opts.sentry });
 
-  process.on('unhandledRejection', (error) => {
-    error && logger.error(error as any)
+  process.on("unhandledRejection", (error) => {
+    error && logger.error(error as any);
 
     sentry.withScope((scope) => {
-      scope.setLevel(sentry.Severity.Critical)
-      sentry.captureException(error)
-    })
-  })
+      scope.setLevel(sentry.Severity.Critical);
+      sentry.captureException(error);
+    });
+  });
 }
 
 export function errorHandler(error: Error): void {
-  sentry.captureException(error)
+  sentry.captureException(error);
 }

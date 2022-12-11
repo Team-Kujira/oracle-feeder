@@ -7,12 +7,18 @@
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@terra-money/station.js": "^1.0.0-beta.1",
+    "@cosmjs/crypto": "^0.29.5",
+    "@cosmjs/encoding": "^0.29.5",
+    "@cosmjs/math": "^0.29.5",
+    "@cosmjs/proto-signing": "^0.29.5",
+    "@cosmjs/stargate": "^0.29.5",
+    "@cosmjs/tendermint-rpc": "^0.29.5",
     "argparse": "^1.0.10",
     "axios": "^0.21.2",
     "bluebird": "^3.7.2",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
+    "kujira.js": "github:Team-Kujira/kujira.js#64d24b760ba2244e275e339d9f50624ab25ac2d3",
     "promptly": "^3.2.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.1.3"

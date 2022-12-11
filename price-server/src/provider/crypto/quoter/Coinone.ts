@@ -1,35 +1,43 @@
-import fetch from 'lib/fetch'
-import { errorHandler } from 'lib/error'
-import { num } from 'lib/num'
-import * as logger from 'lib/logger'
-import { Quoter, Trades } from 'provider/base'
-import { getBaseCurrency } from 'lib/currency'
+import fetch from "lib/fetch";
+import { errorHandler } from "lib/error";
+import { num } from "lib/num";
+import * as logger from "lib/logger";
+import { Quoter, Trades } from "provider/base";
+import { getBaseCurrency } from "lib/currency";
 
 interface CandlestickResponse {
-  success: boolean
+  success: boolean;
   data?: {
-    DT: number
-    Open: string
-    Low: string
-    High: string
-    Close: string
-    Volume: string
-    Adj_Close: string
-  }[]
+    DT: number;
+    Open: string;
+    Low: string;
+    High: string;
+    Close: string;
+    Volume: string;
+    Adj_Close: string;
+  }[];
 }
 
 export class Coinone extends Quoter {
   private async fetchLatestTrades(symbol: string): Promise<Trades> {
     // get latest candles
-    const base = getBaseCurrency(symbol)
+    const base = getBaseCurrency(symbol);
     const response: CandlestickResponse = await fetch(
       `https://tb.coinone.co.kr/api/v1/chart/olhc/?site=coinone${base.toLowerCase()}&type=1m`,
       { timeout: this.options.timeout }
-    ).then((res) => res.json())
+    ).then((res) => res.json());
 
-    if (!response || !response.success || !Array.isArray(response.data) || response.data.length < 1) {
-      logger.error(`${this.constructor.name}: wrong api response`, response ? JSON.stringify(response) : 'empty')
-      throw new Error(`${this.constructor.name}: invalid response`)
+    if (
+      !response ||
+      !response.success ||
+      !Array.isArray(response.data) ||
+      response.data.length < 1
+    ) {
+      logger.error(
+        `${this.constructor.name}: wrong api response`,
+        response ? JSON.stringify(response) : "empty"
+      );
+      throw new Error(`${this.constructor.name}: invalid response`);
     }
 
     return response.data
@@ -38,7 +46,7 @@ export class Coinone extends Quoter {
         price: num(row.Close),
         volume: num(row.Volume),
         timestamp: +row.DT,
-      }))
+      }));
   }
 
   protected async update(): Promise<boolean> {
@@ -46,20 +54,20 @@ export class Coinone extends Quoter {
       await this.fetchLatestTrades(symbol)
         .then((trades) => {
           if (!trades.length) {
-            return
+            return;
           }
 
-          this.setTrades(symbol, trades)
-          this.setPrice(symbol, trades[trades.length - 1].price)
+          this.setTrades(symbol, trades);
+          this.setPrice(symbol, trades[trades.length - 1].price);
         })
         .catch((err) => {
-          logger.error(`${this.constructor.name}[symbol]`, symbol)
-          errorHandler(err)
-        })
+          logger.error(`${this.constructor.name}[symbol]`, symbol);
+          errorHandler(err);
+        });
     }
 
-    return true
+    return true;
   }
 }
 
-export default Coinone
+export default Coinone;

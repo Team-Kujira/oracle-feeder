@@ -1,17 +1,17 @@
-import { BigNumber } from 'bignumber.js'
+import { BigNumber } from "bignumber.js";
 
 export interface Trade {
-  timestamp: number
-  price: BigNumber
-  volume: BigNumber
+  timestamp: number;
+  price: BigNumber;
+  volume: BigNumber;
 }
 
-export type Trades = Trade[]
+export type Trades = Trade[];
 
 export interface TradesBySymbol {
-  [symbol: string]: Trades
+  [symbol: string]: Trades;
 }
 
 export interface PriceBySymbol {
-  [symbol: string]: BigNumber
+  [symbol: string]: BigNumber;
 }

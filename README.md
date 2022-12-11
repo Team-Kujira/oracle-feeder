@@ -57,11 +57,11 @@ npm start add-key
 
 # start voting
 $ npm start vote -- \
-   --source http://localhost:8532/latest \
-   --lcd-url https://lcd-1.anr.dev \
-   --lcd-url https://lcd-2.anr.dev \
-   --chain-id andromeda-oralce-1 \
-   --validators anrvaloper1xx \
-   --validators anrvaloper1yy \
-   --password "<password>"
+   --date-source-url http://localhost:8532/latest \
+   --rpc-url https://rpc.harpoon.kujira.setten.io \
+   --chain-id harpoon-4 \
+   --validators kujiravaloper12345 \
+   --password "<password>" \
+   --gas-prices 0.00125ukuji \
+   --fee-granter kujira1234
 ```
